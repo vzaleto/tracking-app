@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+.leaflet-marker-icon.rotating {
+    transition: transform 0.5s linear;
+}
