@@ -1,5 +1,3 @@
-import {MapObject} from "./MapObject.tsx";
-import {objectsStore} from "../../stores/ObjectsStore.ts";
 import {observer} from "mobx-react-lite";
 import {AppButton} from "../buttons/AppButton.tsx";
 import {authStore} from "../../stores/AuthStore.ts";

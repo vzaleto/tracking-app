@@ -1,9 +1,6 @@
-import type {MapObjectProps} from "../../models/TrackedObject.ts";
 import {observer} from "mobx-react-lite";
 import {Marker, Popup} from "react-leaflet";
 import {objectsStore} from "../../stores/ObjectsStore.ts";
-import {useEffect} from "react";
-import L from "leaflet";
 import {createMarkerIcon} from "../../models/createMarkerIcon.ts";
 
 export const MapObject = observer(() => {

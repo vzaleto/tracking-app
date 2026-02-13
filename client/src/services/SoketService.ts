@@ -40,4 +40,4 @@ class SocketService {
 }
 
 
-export const socketService = new SocketService("ws://localhost:8080", objectsStore)
+export const socketService = new SocketService("https://tracking-app-7p0a.onrender.com", objectsStore)

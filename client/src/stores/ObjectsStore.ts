@@ -19,7 +19,7 @@ export class ObjectsStore {
         const id = this.objects.get(data.id)
         const now = Date.now();
 
-        function calcDirection(prev, next) {
+        function calcDirection(prev:TrackedObject, next:TrackedObject) {
             return (
                 Math.atan2(next.lat - prev.lat, next.lon - prev.lon) *
                 180 / Math.PI
