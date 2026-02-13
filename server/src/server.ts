@@ -1,10 +1,15 @@
-// import {WebSocketServer} from 'ws';
+import http from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
 import { IncomingMessage } from 'http';
 
 const PORT = Number(process.env.PORT) || 8080;
 
-const wss = new WebSocketServer({port:PORT});
+const server = http.createServer((req,res)=>{
+    res.writeHead(200)
+    res.end('OK')
+});
+
+const wss = new WebSocketServer({server});
 
 const paramsData = [
     { id: '1', lat: 49.9935, lon: 36.2304, direction: 43 },
@@ -52,3 +57,6 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
     })
 })
 
+server.lisn(PORT,()=>{
+    console.log(`server conect port ${{PORT}}`)
+})
