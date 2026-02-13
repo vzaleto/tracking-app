@@ -1,6 +1,10 @@
-import {WebSocketServer} from 'ws';
+// import {WebSocketServer} from 'ws';
+import { WebSocketServer, WebSocket } from 'ws';
+import { IncomingMessage } from 'http';
 
-const wss = new WebSocketServer({port: 8080});
+const PORT = Number(process.env.PORT) || 8080;
+
+const wss = new WebSocketServer({port:PORT});
 
 const paramsData = [
     { id: '1', lat: 49.9935, lon: 36.2304, direction: 43 },
@@ -10,7 +14,7 @@ const paramsData = [
     { id: '5', lat: 49.997,  lon: 36.235,  direction: 47 },
 ]
 
-wss.on("connection", (ws, req) => {
+wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
     console.log("new  client connect")
     const interval = setInterval(() => {
 
@@ -39,8 +43,12 @@ wss.on("connection", (ws, req) => {
         console.log(filtered)
             ws.send(JSON.stringify(filtered))
     }, 1000)
+    ws.on('message', (data) => {
+        console.log('message:', data.toString());
+    });
 
     ws.on("close", () => {
         clearInterval(interval)
     })
 })
+
