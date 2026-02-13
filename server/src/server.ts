@@ -1,12 +1,29 @@
 import http from 'http';
 import { WebSocketServer, WebSocket } from 'ws';
-import { IncomingMessage } from 'http';
+import { IncomingMessage,ServerResponse } from 'http';
+import path from 'path';
+import fs from 'fs';
 
 const PORT = Number(process.env.PORT) || 8080;
+const BUILD_PATH = path.join(__dirname, 'build'); //
 
-const server = http.createServer((req,res)=>{
-    res.writeHead(200)
-    res.end('OK')
+const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
+
+    let filePath = path.join(BUILD_PATH, req.url && req.url != '/' ? req.url :'index.html');
+
+    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+        filePath = path.join(BUILD_PATH, 'index.html');
+    }
+
+    fs.readFile(filePath, (err, data) => {
+        if (err) {
+            res.writeHead(404);
+            res.end('Not Found');
+        } else {
+            res.writeHead(200);
+            res.end(data);
+        }
+    });
 });
 
 const wss = new WebSocketServer({server});
@@ -48,6 +65,7 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
         console.log(filtered)
             ws.send(JSON.stringify(filtered))
     }, 1000)
+
     ws.on('message', (data) => {
         console.log('message:', data.toString());
     });
