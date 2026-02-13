@@ -57,6 +57,6 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
     })
 })
 
-server.lisn(PORT,()=>{
+server.listen(PORT,()=>{
     console.log(`server conect port ${{PORT}}`)
 })

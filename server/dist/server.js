@@ -1,9 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-// import {WebSocketServer} from 'ws';
+const http_1 = __importDefault(require("http"));
 const ws_1 = require("ws");
 const PORT = Number(process.env.PORT) || 8080;
-const wss = new ws_1.WebSocketServer({ port: PORT });
+const server = http_1.default.createServer((req, res) => {
+    res.writeHead(200);
+    res.end('OK');
+});
+const wss = new ws_1.WebSocketServer({ server });
 const paramsData = [
     { id: '1', lat: 49.9935, lon: 36.2304, direction: 43 },
     { id: '2', lat: 49.995, lon: 36.232, direction: 44 },
@@ -42,5 +49,8 @@ wss.on("connection", (ws, req) => {
     ws.on("close", () => {
         clearInterval(interval);
     });
+});
+server.listen(PORT, () => {
+    console.log(`server conect port ${{ PORT }}`);
 });
 //# sourceMappingURL=server.js.map
