@@ -11,7 +11,7 @@ const PORT = Number(process.env.PORT) || 8080;
 const BUILD_PATH = path_1.default.join(__dirname, '../../client/dist');
 const app = (0, express_1.default)();
 app.use(express_1.default.static(BUILD_PATH));
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path_1.default.join(BUILD_PATH, 'index.html'));
 });
 const server = http_1.default.createServer(app);
