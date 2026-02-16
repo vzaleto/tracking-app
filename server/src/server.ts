@@ -3,30 +3,38 @@ import { WebSocketServer, WebSocket } from 'ws';
 import { IncomingMessage,ServerResponse } from 'http';
 import path from 'path';
 import fs from 'fs';
+import express from 'express';
 
 const PORT = Number(process.env.PORT) || 8080;
-// const BUILD_PATH = path.join(__dirname, 'build');
 const BUILD_PATH = path.join(__dirname, '../../client/dist');
+const app = express();
 
+app.use(express.static(BUILD_PATH));
 
-const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(BUILD_PATH,'index.html'))
+})
 
-    let filePath = path.join(BUILD_PATH, req.url && req.url != '/' ? req.url :'index.html');
+const server = http.createServer(app)
 
-    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-        filePath = path.join(BUILD_PATH, 'index.html');
-    }
-
-    fs.readFile(filePath, (err, data) => {
-        if (err) {
-            res.writeHead(404);
-            res.end('Not Found');
-        } else {
-            res.writeHead(200);
-            res.end(data);
-        }
-    });
-});
+// const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
+//
+//     let filePath = path.join(BUILD_PATH, req.url && req.url != '/' ? req.url :'index.html');
+//
+//     if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+//         filePath = path.join(BUILD_PATH, 'index.html');
+//     }
+//
+//     fs.readFile(filePath, (err, data) => {
+//         if (err) {
+//             res.writeHead(404);
+//             res.end('Not Found');
+//         } else {
+//             res.writeHead(200);
+//             res.end(data);
+//         }
+//     });
+// });
 
 const wss = new WebSocketServer({server});
 
@@ -78,5 +86,5 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
 })
 
 server.listen(PORT,()=>{
-    console.log(`server conect port ${{PORT}}`)
+    console.log(`server connect port ${PORT}`)
 })
