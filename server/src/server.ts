@@ -5,7 +5,9 @@ import path from 'path';
 import fs from 'fs';
 
 const PORT = Number(process.env.PORT) || 8080;
-const BUILD_PATH = path.join(__dirname, 'build'); //
+// const BUILD_PATH = path.join(__dirname, 'build');
+const BUILD_PATH = path.join(__dirname, '../../client/dist');
+
 
 const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
 
