@@ -86,5 +86,7 @@ wss.on("connection", (ws: WebSocket, req: IncomingMessage) => {
 })
 
 server.listen(PORT,()=>{
-    console.log(`server connect port ${PORT}`)
+    console.log(`server connect port ${PORT}`);
+    console.log('Serving frontend from:', BUILD_PATH);
+
 })
