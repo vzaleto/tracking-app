@@ -17,25 +17,6 @@ app.get('/',(req,res)=>{
 
 const server = http.createServer(app)
 
-// const server = http.createServer((req: IncomingMessage, res: ServerResponse) => {
-//
-//     let filePath = path.join(BUILD_PATH, req.url && req.url != '/' ? req.url :'index.html');
-//
-//     if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-//         filePath = path.join(BUILD_PATH, 'index.html');
-//     }
-//
-//     fs.readFile(filePath, (err, data) => {
-//         if (err) {
-//             res.writeHead(404);
-//             res.end('Not Found');
-//         } else {
-//             res.writeHead(200);
-//             res.end(data);
-//         }
-//     });
-// });
-
 const wss = new WebSocketServer({server});
 
 const paramsData = [
