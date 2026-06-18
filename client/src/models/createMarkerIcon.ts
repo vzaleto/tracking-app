@@ -1,6 +1,6 @@
 import L from "leaflet";
 
-export const createMarkerIcon = (direction:number,isLost:boolean)=>{
+export const createMarkerIcon = ()=>{
   return   L.divIcon({
       className: "",
       html: `
