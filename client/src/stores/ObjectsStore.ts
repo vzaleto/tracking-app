@@ -19,11 +19,24 @@ export class ObjectsStore {
         const id = this.objects.get(data.id)
         const now = Date.now();
 
-        function calcDirection(prev:TrackedObject, next:TrackedObject) {
-            return (
-                Math.atan2(next.lat - prev.lat, next.lon - prev.lon) *
-                180 / Math.PI
-            )
+        // function calcDirection(prev:TrackedObject, next:TrackedObject) {
+        //     return (
+        //         Math.atan2(next.lat - prev.lat, next.lon - prev.lon) *
+        //         180 / Math.PI
+        //     )
+        // }
+
+        function calcDirection(prev: TrackedObject, next: TrackedObject) {
+            const dLat = next.lat - prev.lat;
+            const dLon = next.lon - prev.lon;
+
+            const distance = Math.sqrt(dLat * dLat + dLon * dLon);
+
+            if (distance < 0.00001) {
+                return prev.direction ?? 0;
+            }
+
+            return Math.atan2(dLon, dLat) * 180 / Math.PI;
         }
 
         if (id) {
@@ -41,37 +54,35 @@ export class ObjectsStore {
                 ...data,
                 lastUpdate: now,
                 lost: false,
-                direction:0,
+                direction: 0,
             })
         }
     }
 
     cleanUp() {
-        const now =  Date.now()
-        for (const [key,obj] of this.objects) {
+        const now = Date.now()
+        for (const [key, obj] of this.objects) {
             if (now - obj.lastUpdate > MARK_LOST_TIMEOUT) {
-                this.objects.set(key,{
+                this.objects.set(key, {
                     ...obj,
-                    lost:true,
+                    lost: true,
                 })
             }
-            if (now - obj.lastUpdate > REMOVE_LOST_TIMEOUT ) {
+            if (now - obj.lastUpdate > REMOVE_LOST_TIMEOUT) {
                 this.objects.delete(key)
             }
         }
     }
+
     get list() {
         return Array.from(this.objects.values())
     }
-    clear(){
+
+    clear() {
         this.objects.clear()
     }
 }
 
 export const objectsStore = new ObjectsStore()
 
-//  Map.get(key)
-//  либо возвращает значение
-// либо undefined
-// НИКОГДА не создаёт запись
 

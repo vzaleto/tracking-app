@@ -29,13 +29,13 @@ export function FormAuth() {
                 <form onSubmit={handleSubmit} >
 
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-                               placeholder="Your nickname"
+                               placeholder="1111"
                                className="w-full rounded-xl bg-black/40 border border-white/20 px-4 py-3 text-white placeholder-white/40 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30 transition"/>
 
 
 
                         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}
-                               placeholder="Email"
+                               placeholder="1111"
                                className="w-full rounded-xl bg-black/40 border border-white/20 px-4 py-3 text-white placeholder-white/40 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30 transition"/>
 
                     {error && (
@@ -44,7 +44,7 @@ export function FormAuth() {
                         </p>
                     )}
                     <AppButton className="w-full" type='submit'>Connect</AppButton>
-                    {/*<button type="submit"  className="mt-6 w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-500 active:scale-[0.98] transition">  Connect</button>*/}
+
                 </form>
 
             </div>
